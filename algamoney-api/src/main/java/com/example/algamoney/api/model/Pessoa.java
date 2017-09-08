@@ -1,11 +1,8 @@
 package com.example.algamoney.api.model;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -57,6 +54,12 @@ public class Pessoa {
 		this.ativo = ativo;
 	}
 
+	@JsonIgnore
+	@Transient
+	public boolean isInativo() {
+		return !ativo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,5 +84,6 @@ public class Pessoa {
 			return false;
 		return true;
 	}
-	
+
+
 }
