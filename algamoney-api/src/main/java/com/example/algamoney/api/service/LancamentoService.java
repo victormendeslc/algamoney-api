@@ -29,7 +29,7 @@ public class LancamentoService {
             throw new PessoaInexistenteOuInativaException();
         }
 
-        return null;
+        return lancamentoRepository.save(lancamento);
     }
 
 }
