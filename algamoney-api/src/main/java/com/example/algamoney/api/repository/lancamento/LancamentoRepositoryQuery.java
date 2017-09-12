@@ -2,13 +2,13 @@ package com.example.algamoney.api.repository.lancamento;
 
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.repository.filter.LancamentoFilter;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Created by victor on 08/09/2017.
  */
 public interface LancamentoRepositoryQuery {
 
-     List<Lancamento> filtrar(LancamentoFilter filter);
+     Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable);
 }
