@@ -1,6 +1,5 @@
 package com.example.algamoney.api.security;
 
-import com.example.algamoney.api.model.Permissao;
 import com.example.algamoney.api.model.Usuario;
 import com.example.algamoney.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
