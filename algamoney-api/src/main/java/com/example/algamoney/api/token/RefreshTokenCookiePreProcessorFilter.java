@@ -1,5 +1,6 @@
 package com.example.algamoney.api.token;
 
+import com.example.algamoney.api.config.AuthorizationServerConfig;
 import org.apache.catalina.util.ParameterMap;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -19,7 +20,6 @@ import java.util.Map;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RefreshTokenCookiePreProcessorFilter implements Filter {
 
-    public static final String REFRESH_TOKEN = "refresh_token";
     public static final String URI_OAUTH_TOKEN = "/oauth/token";
 
     @Override
@@ -27,10 +27,10 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
 
         if (URI_OAUTH_TOKEN.equalsIgnoreCase(req.getRequestURI())
-                && REFRESH_TOKEN.equals(req.getParameter("grant_type"))
+                && AuthorizationServerConfig.REFRESH_TOKEN.equals(req.getParameter("grant_type"))
                 && req.getCookies() != null) {
             for (Cookie cookie : req.getCookies()) {
-                if(cookie.getName().equals(REFRESH_TOKEN)){
+                if(cookie.getName().equals(AuthorizationServerConfig.REFRESH_TOKEN)){
                     String refreshToken = cookie.getValue();
                     req = new MyServletRequestWrapper(req,refreshToken);
                 }
@@ -69,7 +69,7 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
         @Override
         public Map<String, String[]> getParameterMap() {
             ParameterMap<String,String[]> map = new ParameterMap<>(getRequest().getParameterMap());
-            map.put(REFRESH_TOKEN,new String[]{refreshToken});
+            map.put(AuthorizationServerConfig.REFRESH_TOKEN,new String[]{refreshToken});
             return map;
         }
     }
