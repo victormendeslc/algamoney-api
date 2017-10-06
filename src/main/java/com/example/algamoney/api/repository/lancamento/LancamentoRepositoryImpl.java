@@ -1,9 +1,6 @@
 package com.example.algamoney.api.repository.lancamento;
 
-import com.example.algamoney.api.model.Categoria_;
 import com.example.algamoney.api.model.Lancamento;
-import com.example.algamoney.api.model.Lancamento_;
-import com.example.algamoney.api.model.Pessoa_;
 import com.example.algamoney.api.repository.filter.LancamentoFilter;
 import com.example.algamoney.api.repository.projection.ResumoLancamento;
 import org.apache.commons.lang3.StringUtils;
@@ -53,11 +50,11 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         Root<Lancamento> root = criteria.from(Lancamento.class);
 
         criteria.select(builder.construct(ResumoLancamento.class
-                , root.get(Lancamento_.codigo), root.get(Lancamento_.descricao)
-                , root.get(Lancamento_.dataVencimento), root.get(Lancamento_.dataPagamento)
-                , root.get(Lancamento_.valor), root.get(Lancamento_.tipo)
-                , root.get(Lancamento_.categoria).get(Categoria_.nome)
-                , root.get(Lancamento_.pessoa).get(Pessoa_.nome)));
+                , root.get("codigo"), root.get("descricao")
+                , root.get("dataVencimento"), root.get("dataPagamento")
+                , root.get("valor"), root.get("tipo")
+                , root.get("categoria").get("nome")
+                , root.get("pessoa").get("nome")));
 
         Predicate[] predicates = criarRestricoes(lancamentoFilter, builder, root);
         criteria.where(predicates);
@@ -72,16 +69,16 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         List<Predicate> predicates = new ArrayList<>();
         if (!StringUtils.isEmpty(filter.getDescricao())) {
             predicates.add(builder.like(
-                    builder.lower(root.get(Lancamento_.descricao)),"%".concat(filter.getDescricao().toLowerCase().concat("%"))
+                    builder.lower(root.get("descricao")),"%".concat(filter.getDescricao().toLowerCase().concat("%"))
             ));
         }
 
         if (filter.getDataVencimentoDe() != null) {
-            predicates.add(builder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento),filter.getDataVencimentoDe()));
+            predicates.add(builder.greaterThanOrEqualTo(root.get("dataVencimento"),filter.getDataVencimentoDe()));
         }
 
         if (filter.getDataVencimentoAte() != null) {
-            predicates.add(builder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento),filter.getDataVencimentoAte()));
+            predicates.add(builder.lessThanOrEqualTo(root.get("dataVencimento"),filter.getDataVencimentoAte()));
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);
