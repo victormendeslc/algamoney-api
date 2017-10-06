@@ -23,6 +23,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public static final String PASSWORD = "password";
     public static final String WRITE = "write";
     public static final String READ = "read";
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
