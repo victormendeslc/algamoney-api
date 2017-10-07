@@ -1,5 +1,6 @@
-    package com.example.algamoney.api.config;
+package com.example.algamoney.api.config;
 
+import com.example.algamoney.api.config.token.CustomTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,16 +9,20 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import java.util.Arrays;
 
 /**
  * Created by victor.cunha on 14/09/2017.
  */
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     public static final String REFRESH_TOKEN = "refresh_token";
     public static final String PASSWORD = "password";
@@ -42,10 +47,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        TokenEnhancerChain tokenChain = new TokenEnhancerChain();
+        tokenChain.setTokenEnhancers(Arrays.asList(tokenEnchancer(), accesstokenConverter()));
+
         endpoints.tokenStore(tokenStore())
                 .accessTokenConverter(accesstokenConverter())
                 .reuseRefreshTokens(false)
                 .authenticationManager(authenticationManager);
+    }
+
+    @Bean
+    public TokenEnhancer tokenEnchancer() {
+        return new CustomTokenEnhancer();
     }
 
     @Bean
@@ -56,7 +69,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Bean
-    public TokenStore tokenStore(){
+    public TokenStore tokenStore() {
         return new JwtTokenStore(accesstokenConverter());
     }
 }
