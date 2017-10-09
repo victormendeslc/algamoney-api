@@ -1,79 +1,94 @@
 package com.example.algamoney.api.model;
 
-import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by victor on 02/10/2017.
- */
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
 
-    @Id
-    private Long codigo;
+	@Id
+	private Long codigo;
 
-    private String nome;
-    private String email;
-    private String senha;
+	private String nome;
+	private String email;
+	private String senha;
 
-    @ManyToMany
-    @JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name = "codigo_usuario"),
-            inverseJoinColumns = @JoinColumn(name = "codigo_permissao"))
-    private List<Permissao> permissoes;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name = "codigo_usuario")
+		, inverseJoinColumns = @JoinColumn(name = "codigo_permissao"))
+	private List<Permissao> permissoes;
 
-    public Long getCodigo() {
-        return codigo;
-    }
+	public Long getCodigo() {
+		return codigo;
+	}
 
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
-    }
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getSenha() {
-        return senha;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-    public List<Permissao> getPermissoes() {
-        return permissoes;
-    }
+	public List<Permissao> getPermissoes() {
+		return permissoes;
+	}
 
-    public void setPermissoes(List<Permissao> permissoes) {
-        this.permissoes = permissoes;
-    }
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
 
-        Usuario usuario = (Usuario) o;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
 
-        return codigo != null ? codigo.equals(usuario.codigo) : usuario.codigo == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return codigo != null ? codigo.hashCode() : 0;
-    }
 }

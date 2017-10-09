@@ -1,9 +1,19 @@
 package com.example.algamoney.api.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "lancamento")
@@ -13,6 +23,7 @@ public class Lancamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@NotNull
 	private String descricao;
 
 	@NotNull
@@ -36,6 +47,7 @@ public class Lancamento {
 	@JoinColumn(name = "codigo_categoria")
 	private Categoria categoria;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;

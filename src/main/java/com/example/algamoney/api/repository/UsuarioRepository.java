@@ -1,14 +1,13 @@
 package com.example.algamoney.api.repository;
 
-import com.example.algamoney.api.model.Usuario;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
-/**
- * Created by victor on 02/10/2017.
- */
-public interface UsuarioRepository extends JpaRepository<Usuario,Long>{
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    Optional<Usuario> findByEmail(String email);
+import com.example.algamoney.api.model.Usuario;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
+	public Optional<Usuario> findByEmail(String email);
+	
 }

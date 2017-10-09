@@ -4,46 +4,53 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * Created by victor on 02/10/2017.
- */
-
 @Entity
-@Table(name="permissao")
+@Table(name = "permissao")
 public class Permissao {
 
-    @Id
-    private Long codigo;
-    private String descricao;
+	@Id
+	private Long codigo;
+	private String descricao;
 
-    public Long getCodigo() {
-        return codigo;
-    }
+	public Long getCodigo() {
+		return codigo;
+	}
 
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
-    }
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
 
-        Permissao permissao = (Permissao) o;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Permissao other = (Permissao) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
 
-        return codigo.equals(permissao.codigo);
-    }
-
-    @Override
-    public int hashCode() {
-        return codigo.hashCode();
-    }
 }

@@ -2,38 +2,37 @@ package com.example.algamoney.api.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/**
- * Created by victor on 05/10/2017.
- */
-
-
 @ConfigurationProperties("algamoney")
 public class AlgamoneyApiProperty {
 
-    private final Seguranca seguranca = new Seguranca();
-    private  String origemPermitida = "http://localhost:8000";
+	private String originPermitida = "http://localhost:8000";
 
-    public Seguranca getSeguranca() {
-        return seguranca;
-    }
+	private final Seguranca seguranca = new Seguranca();
 
-    public String getOrigemPermitida() {
-        return origemPermitida;
-    }
+	public Seguranca getSeguranca() {
+		return seguranca;
+	}
 
-    public void setOrigemPermitida(String origemPermitida) {
-        this.origemPermitida = origemPermitida;
-    }
+	public String getOriginPermitida() {
+		return originPermitida;
+	}
 
-    public static class Seguranca{
+	public void setOriginPermitida(String originPermitida) {
+		this.originPermitida = originPermitida;
+	}
 
-        private Boolean enableHttps;
+	public static class Seguranca {
 
-        public boolean isEnableHttps() {
-            return enableHttps;
-        }
-    }
+		private boolean enableHttps;
 
+		public boolean isEnableHttps() {
+			return enableHttps;
+		}
 
+		public void setEnableHttps(boolean enableHttps) {
+			this.enableHttps = enableHttps;
+		}
+
+	}
 
 }
